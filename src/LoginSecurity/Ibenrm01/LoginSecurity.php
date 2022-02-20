@@ -29,6 +29,8 @@ use pocketmine\event\block\{
     BlockPlaceEvent, BlockBreakEvent
 };
 
+use pocketmine\permission\DefaultPermissions;
+
 use jojoe77777\FormAPI\CustomForm;
 use jojoe77777\FormAPI\Form;
 use jojoe77777\FormAPI\FormAPI;
@@ -43,6 +45,7 @@ class LoginSecurity extends PluginBase implements Listener {
     const MSG_REMOVE_PASSWORD = "§l§eREMOVE PASSWORD §7// §r";
     const MSG_MY_PASSWORD = "§l§ePASSWORD §7// §r";
     const MSG_FORGOT_PASSWORD = "§l§eFORGOT PASSWORD §7// §r";
+    const MSG_RECOVERY_PASSWORD = "§l§eRECOVERY PASSWORD §7// §r";
 
     public $timer_change_password = [];
     public $timer_remove_password = [];
@@ -62,7 +65,7 @@ class LoginSecurity extends PluginBase implements Listener {
             $data = new Config($this->getDataFolder()."/players/".$player->getName().".yml", Config::YAML);
             if($data->exists("login")){
                 if($data->get("login") == "null"){
-                    $event->setCancelled();
+                    $event->cancel();
                 } elseif(!$data->exists("forgot-password")){
                     $event->cancel();
                 }
@@ -100,7 +103,7 @@ class LoginSecurity extends PluginBase implements Listener {
             $data = new Config($this->getDataFolder()."/players/".$player->getName().".yml", Config::YAML);
             if($data->exists("login")){
                 if($data->get("login") == "null"){
-                    $event->setCancelled();
+                    $event->cancel();
                 } elseif(!$data->exists("forgot-password")){
                     $event->cancel();
                 }
@@ -122,18 +125,18 @@ class LoginSecurity extends PluginBase implements Listener {
             if($data->get("login") == "null"){
                 if($cmd[0] == "/login"){
                 } elseif($cmd[0] != "/forgotpass"){
-                    $event->cancel(true);
+                    $event->cancel();
                 }
             }
         } else {
             if(!$data->exists("password")){
                 if($cmd[0] != "/register"){
-                    $event->setCancelled(true);
+                    $event->cancel();
                     $player->sendMessage(self::MSG_REGISTER.$this->getConfig()->get("unregistered.register"));
                 }
             } elseif($data->exists("forgot-password")){
                 if($cmd[0] != "/forgotpass"){
-                    $event->cancel(true);
+                    $event->cancel();
                     $player->sendMessage(self::MSG_RECOVERY_PASSWORD.$this->getConfig()->get("please-forgot.password"));
                 }
             }
@@ -339,7 +342,7 @@ class LoginSecurity extends PluginBase implements Listener {
      */
     public function onAcceptRm(Player $player){
         $dt = new Config($this->getDataFolder()."/players/".$player->getName().".yml", Config::YAML);
-        $form = new CustomForm(function(Player $player, $data = null) use ($dt) {
+        $form = new SimpleForm(function(Player $player, $data = null) use ($dt) {
             if($data === null){
                 $player->sendMessage(self::MSG_FORGOT_PASSWORD."§aThanks for open Forgot Password UI");
                 return;
@@ -476,7 +479,7 @@ class LoginSecurity extends PluginBase implements Listener {
             break;
             case "rmpass":
                 if($player instanceof Player){
-                    if($player->isOp()){
+                    if($player->hasPermission(DefaultPermissions::ROOT_OPERATOR)){
                         if(isset($args[0])){
                             $target = $this->getServer()->getPlayer($args[0]);
                             if($target instanceof Player){
@@ -517,7 +520,6 @@ class LoginSecurity extends PluginBase implements Listener {
                     return true;
                 } else {
                     $player->sendMessage(self::MSG_MY_PASSWORD."§cPlease Use This Command in-game");
-                    return true;
                 }
             break;
             case "forgotpass":
@@ -526,7 +528,6 @@ class LoginSecurity extends PluginBase implements Listener {
                     return true;
                 } else {
                     $player->sendMessage(self::MSG_FORGOT_PASSWORD."§cPlease Use This Command In-Game");
-                    return true;
                 }
             break;
         }
