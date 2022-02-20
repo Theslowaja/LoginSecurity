@@ -36,5 +36,5 @@ permissions:
     default: true
   my.pass:
     default: true
-   forot.pass:
+  forgot.pass:
     default: true
