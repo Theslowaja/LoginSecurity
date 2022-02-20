@@ -297,7 +297,7 @@ class LoginSecurity extends PluginBase implements Listener {
             $vls_first = explode(":", $dt->getNested("forgot-password.first-question"));
             $vls_second = explode(":", $dt->getNested("forgot-password.second-question"));
             $vls_last = explode(":", $dt->getNested("forgot-password.last-question"));
-            $form = new CustomForm(function((Player $player, array $data = null) use ($dt, $vls_first, $vls_second, $vls_last) {
+            $form = new CustomForm(function(Player $player, array $data = null) use ($dt, $vls_first, $vls_second, $vls_last) {
                 if($data === null){
                     $player->sendMessage(self::MSG_FORGOT_PASSWORD."§aThanks for open recover password menu");
                     return;
