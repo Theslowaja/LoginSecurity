@@ -3,6 +3,7 @@
 # CONFIG.YML #
 ##############
 # AUTHOR: Ibenrm01
+# CONVERTER: Theslowaja
 
 # MESSAGE: LOGIN
 success.login: "§aSuccess Logged in, §dWelcome to server!"
