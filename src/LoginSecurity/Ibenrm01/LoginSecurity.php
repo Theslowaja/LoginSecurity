@@ -29,6 +29,12 @@ use pocketmine\event\block\{
     BlockPlaceEvent, BlockBreakEvent
 };
 
+use jojoe77777\FormAPI\CustomForm;
+use jojoe77777\FormAPI\Form;
+use jojoe77777\FormAPI\FormAPI;
+use jojoe77777\FormAPI\ModalForm;
+use jojoe77777\FormAPI\SimpleForm;
+
 class LoginSecurity extends PluginBase implements Listener {
 
     const MSG_LOGIN = "§l§eLOGIN §7// §r";
