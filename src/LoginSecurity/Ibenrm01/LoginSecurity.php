@@ -3,7 +3,7 @@
 namespace LoginSecurity\Ibenrm01;
 
 use pocketmine\{
-    Server, Player
+    Server, player\Player
 };
 
 use pocketmine\plugin\{
@@ -41,9 +41,8 @@ class LoginSecurity extends PluginBase implements Listener {
     public $timer_change_password = [];
     public $timer_remove_password = [];
 
-    public function onEnable(){
+    public function onEnable():void{
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
-        $this->getLogger()->info("§aPlugin Enabled");
         $this->saveDefaultConfig();
         @mkdir($this->getDataFolder()."/players/");
     }
@@ -59,10 +58,10 @@ class LoginSecurity extends PluginBase implements Listener {
                 if($data->get("login") == "null"){
                     $event->setCancelled();
                 } elseif(!$data->exists("forgot-password")){
-                    $event->setCancelled();
+                    $event->cancel();
                 }
             } else {
-                $event->setCancelled();
+                $event->cancel();
             }
         }
     }
@@ -76,12 +75,12 @@ class LoginSecurity extends PluginBase implements Listener {
             $data = new Config($this->getDataFolder()."/players/".$player->getName().".yml", Config::YAML);
             if($data->exists("login")){
                 if($data->get("login") == "null"){
-                    $event->setCancelled();
+                    $event->cancel();
                 } elseif(!$data->exists("forgot-password")){
-                    $event->setCancelled();
+                    $event->cancel();
                 }
             } else {
-                $event->setCancelled();
+                $event->cancel();
             }
         }
     }
@@ -97,10 +96,10 @@ class LoginSecurity extends PluginBase implements Listener {
                 if($data->get("login") == "null"){
                     $event->setCancelled();
                 } elseif(!$data->exists("forgot-password")){
-                    $event->setCancelled();
+                    $event->cancel();
                 }
             } else {
-                $event->setCancelled();
+                $event->cancel();
             }
         }
     }
@@ -117,7 +116,7 @@ class LoginSecurity extends PluginBase implements Listener {
             if($data->get("login") == "null"){
                 if($cmd[0] == "/login"){
                 } elseif($cmd[0] != "/forgotpass"){
-                    $event->setCancelled(true);
+                    $event->cancel(true);
                 }
             }
         } else {
@@ -128,7 +127,7 @@ class LoginSecurity extends PluginBase implements Listener {
                 }
             } elseif($data->exists("forgot-password")){
                 if($cmd[0] != "/forgotpass"){
-                    $event->setCancelled(true);
+                    $event->cancel(true);
                     $player->sendMessage(self::MSG_RECOVERY_PASSWORD.$this->getConfig()->get("please-forgot.password"));
                 }
             }
