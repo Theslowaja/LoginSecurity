@@ -254,8 +254,7 @@ class LoginSecurity extends PluginBase implements Listener {
     public function onForgot(Player $player){
         $dt = new Config($this->getDataFolder()."/players/".$player->getName().".yml", Config::YAML);
         if(!$dt->exists("forgot-password")){
-            $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
-            $form = $api->createCustomForm(function (Player $player, array $data = null) use ($dt) {
+            $form = new CustomForm(function(Player $player, array $data = null) use ($dt) {
                 if($data === null){
                     if(!$dt->exists("forgot-password")){
                         $this->onForgot($player);
@@ -292,8 +291,7 @@ class LoginSecurity extends PluginBase implements Listener {
             $vls_first = explode(":", $dt->getNested("forgot-password.first-question"));
             $vls_second = explode(":", $dt->getNested("forgot-password.second-question"));
             $vls_last = explode(":", $dt->getNested("forgot-password.last-question"));
-            $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
-            $form = $api->createCustomForm(function (Player $player, array $data = null) use ($dt, $vls_first, $vls_second, $vls_last) {
+            $form = new CustomForm(function((Player $player, array $data = null) use ($dt, $vls_first, $vls_second, $vls_last) {
                 if($data === null){
                     $player->sendMessage(self::MSG_FORGOT_PASSWORD."§aThanks for open recover password menu");
                     return;
@@ -335,8 +333,7 @@ class LoginSecurity extends PluginBase implements Listener {
      */
     public function onAcceptRm(Player $player){
         $dt = new Config($this->getDataFolder()."/players/".$player->getName().".yml", Config::YAML);
-        $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
-        $form = $api->createModalForm(function (Player $player, $data) use ($dt) {
+        $form = new CustomForm(function(Player $player, $data = null) use ($dt) {
             if($data === null){
                 $player->sendMessage(self::MSG_FORGOT_PASSWORD."§aThanks for open Forgot Password UI");
                 return;
