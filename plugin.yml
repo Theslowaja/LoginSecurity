@@ -1,19 +1,40 @@
 name: LoginSecurity
 main: LoginSecurity\Ibenrm01\LoginSecurity
 version: 1.4
-api: 3.9.5
+api: 4.0.0
 author: Ibenrm01
+converter: Theslowaja
 
 commands:
   login:
     description: Login Commands
+    permission: login.pass
   changepass:
     description: Change Password Commands
+    permission: change.pass
   rmpass:
     description: Remove Password Commands
+    permission: remove.pass
   register:
     description: Register Commands
+    permission: reg.pass
   mypass:
     description: Check My Password
+    permission: my.pass
   forgotpass:
     description: Forgot Your Password ?
+    permission: forgot.pass
+    
+permissions:
+  login.pass:
+    default: true
+  change.pass:
+    default: true
+  remove.pass:
+    default: true
+  reg.pass:
+    default: true
+  my.pass:
+    default: true
+   forot.pass:
+    default: true
