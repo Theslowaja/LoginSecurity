@@ -1,9 +1,0 @@
---- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/Theslowaja/LoginSecurity
-build-by-default: true
-branches:
-- main
-projects:
-  LoginSecurity:
-    path: ""
-    icon: "logos.png"
-...
