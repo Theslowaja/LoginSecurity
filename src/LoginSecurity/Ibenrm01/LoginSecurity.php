@@ -267,6 +267,7 @@ class LoginSecurity extends PluginBase implements Listener {
                 if($data === null){
                     if(!$dt->exists("forgot-password")){
                         $this->onForgot($player);
+                        return true;
                     } else {
                         $player->sendMessage(self::MSG_FORGOT_PASSWORD."§aThanks for open forgot password menu");
                     }
@@ -386,50 +387,49 @@ class LoginSecurity extends PluginBase implements Listener {
      * @return bool
      */
     public function onCommand(CommandSender $player, Command $cmd, string $label, array $args) :bool {
-        switch($cmd->getName()){
-            case "login":
-                if($player instanceof Player){
+        if($command->getName() == "login") {
+            if($player instanceof Player){
                     if(isset($args[0])){
-                        $data = new Config($this->getDataFolder()."/players/".$player->getName().".yml", Config::YAML);
+                       $data = new Config($this->getDataFolder()."/players/".$player->getName().".yml", Config::YAML);
                         if($data->exists("password")){
-                            if($data->get("password") != null){
-                                if($args[0] == $data->getNested("password")){
-                                    if($data->exists("login")){
-                                        if($data->get("login") == "null"){
-                                            $data->set("login", "success");
-                                            $data->save();
-                                            $player->sendMessage(self::MSG_LOGIN.$this->getConfig()->get("success.login"));
-                                            return true;
-                                        } else {
-                                            $player->sendMessage(self::MSG_LOGIN.$this->getConfig()->get("already.login"));
-                                            return true;
-                                        }
-                                    } else {
-                                        $player->sendMessage(self::MSG_LOGIN.$this->getConfig()->get("please.register.login"));
+                          if($data->get("password") != null){
+                            if($args[0] == $data->getNested("password")){
+                                if($data->exists("login")){
+                                    if($data->get("login") == "null"){
+                                        $data->set("login", "success");
+                                        $data->save();
+                                        $player->sendMessage(self::MSG_LOGIN.$this->getConfig()->get("success.login"));
+                                    return true;
+                                   } else {
+                                        $player->sendMessage(self::MSG_LOGIN.$this->getConfig()->get("already.login"));
                                         return true;
                                     }
                                 } else {
-                                    $player->sendMessage(self::MSG_LOGIN.$this->getConfig()->get("password.wrong.login"));
-                                    return true;
+                                    $player->sendMessage(self::MSG_LOGIN.$this->getConfig()->get("please.register.login"));
+                                     return true;
                                 }
                             } else {
-                                $player->sendMessage(self::MSG_LOGIN.$this->getConfig()->get("please.register.login"));
+                                $player->sendMessage(self::MSG_LOGIN.$this->getConfig()->get("password.wrong.login"));
                                 return true;
                             }
-                        } else {
+                         } else {
                             $player->sendMessage(self::MSG_LOGIN.$this->getConfig()->get("please.register.login"));
                             return true;
                         }
                     } else {
-                        $player->sendMessage(self::MSG_LOGIN."§b/login (password)");
+                        $player->sendMessage(self::MSG_LOGIN.$this->getConfig()->get("please.register.login"));
                         return true;
                     }
                 } else {
-                    $player->sendMessage(self::MSG_LOGIN."§cPlease Use This Command in game");
+                    $player->sendMessage(self::MSG_LOGIN."§b/login (password)");
                     return true;
                 }
-            break;
-            case "register":
+            } else {
+                $player->sendMessage(self::MSG_LOGIN."§cPlease Use This Command in game");
+                return true;
+            }
+        }
+            if($command->getName() == "register") {
                 if($player instanceof Player){
                     if(isset($args[0]) && isset($args[1])){
                         if(!isset($args[2])){
@@ -452,8 +452,8 @@ class LoginSecurity extends PluginBase implements Listener {
                     $player->sendMessage(self::MSG_REGISTER."§cUse This Command in-game");
                     return true;
                 }
-            break;
-            case "changepass":
+            }
+            if($command->getName() == "changepass") {
                 if($player instanceof Player){
                     if(isset($args[0]) && isset($args[1])){
                         if(!isset($args[2])){
@@ -476,8 +476,8 @@ class LoginSecurity extends PluginBase implements Listener {
                     $player->sendMessage(self::MSG_CHANGE_PASSWORD."§cPlease use this command in-game");
                     return true;
                 }
-            break;
-            case "rmpass":
+            }
+            if($command->getName() == "rmpass") {
                 if($player instanceof Player){
                     if($player->hasPermission(DefaultPermissions::ROOT_OPERATOR)){
                         if(isset($args[0])){
@@ -513,16 +513,16 @@ class LoginSecurity extends PluginBase implements Listener {
                     $player->sendMessage(self::MSG_REMOVE_PASSWORD."§cPlease Use This Command in-game");
                     return true;
                 }
-            break;
-            case "mypass":
+            }
+            if($command->getName() == "mypass") {
                 if($player instanceof Player){
                     $this->onMypass($player);
                     return true;
                 } else {
                     $player->sendMessage(self::MSG_MY_PASSWORD."§cPlease Use This Command in-game");
                 }
-            break;
-            case "forgotpass":
+            }
+            if($command->getName() == "forgotpass") {
                 if($player instanceof Player){
                     $this->onForgot($player);
                     return true;
