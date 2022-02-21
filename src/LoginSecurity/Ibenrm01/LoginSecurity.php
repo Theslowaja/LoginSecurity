@@ -265,10 +265,10 @@ class LoginSecurity extends PluginBase implements Listener {
         if(!$dt->exists("forgot-password")){
             $form = new CustomForm(function(Player $player, array $data = null) use ($dt) {
                 if($data === null){
-                    if(!$dt->exists("forgot-password")){
-                        $this->onForgot($player);
-                    } else {
+                    if($dt->exists("forgot-password")){
                         $player->sendMessage(self::MSG_FORGOT_PASSWORD."§aThanks for open forgot password menu");
+                    } else {
+                        $this->onForgot($player);
                     }
                     return;
                 } else {
