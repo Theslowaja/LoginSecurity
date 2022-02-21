@@ -355,8 +355,8 @@ class LoginSecurity extends PluginBase implements Listener {
         });
         $form->setTitle("§l§eREMOVE FORGOT PASSWORD");
         $form->setContent("§bdo you really want to delete ?");
-        $form->setButton1("§aACCEPT", 1);
-        $form->setButton2("§cCANCEL", 2);
+        $form->setButton1("§aACCEPT");
+        $form->setButton2("§cCANCEL");
         $form->sendToPlayer($player);
     }
 
