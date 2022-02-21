@@ -270,7 +270,7 @@ class LoginSecurity extends PluginBase implements Listener {
                     } else {
                         $this->onForgot($player);
                     }
-                    return;
+                    return false;
                 } else {
                     if($data[1] != null && $data[2] != null && $data[3] != null && $data[4] != null && $data[5] != null && $data[6] != null){
                         $dt->setNested("forgot-password.first-question", $data[1].":".$data[2]);
