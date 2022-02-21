@@ -271,7 +271,7 @@ class LoginSecurity extends PluginBase implements Listener {
                     } else {
                         $player->sendMessage(self::MSG_FORGOT_PASSWORD."§aThanks for open forgot password menu");
                     }
-                    return;
+                    return true;
                 } else {
                     if($data[1] != null && $data[2] != null && $data[3] != null && $data[4] != null && $data[5] != null && $data[6] != null){
                         $dt->setNested("forgot-password.first-question", $data[1].":".$data[2]);
@@ -386,7 +386,7 @@ class LoginSecurity extends PluginBase implements Listener {
      * 
      * @return bool
      */
-    public function onCommand(CommandSender $player, Command $cmd, string $label, array $args) :bool {
+    public function onCommand(CommandSender $player, Command $command, string $label, array $args) :bool {
         if($command->getName() == "login") {
             if($player instanceof Player){
                     if(isset($args[0])){
