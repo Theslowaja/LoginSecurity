@@ -529,7 +529,7 @@ class LoginSecurity extends PluginBase implements Listener {
                 } else {
                     $player->sendMessage(self::MSG_FORGOT_PASSWORD."§cPlease Use This Command In-Game");
                 }
-            break;
+            }
         }
         return true;
     }
