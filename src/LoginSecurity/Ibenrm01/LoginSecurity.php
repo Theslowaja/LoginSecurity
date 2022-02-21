@@ -61,8 +61,8 @@ class LoginSecurity extends PluginBase implements Listener {
      */
     public function onDamage(EntityDamageByEntityEvent $event){
         $player = $event->getEntity();
-        if(file_exists($this->getDataFolder()."/players/".$player->getName().".yml")){
-            $data = new Config($this->getDataFolder()."/players/".$player->getName().".yml", Config::YAML);
+        if(file_exists($this->getDataFolder()."/players/".$player->getNameTag().".yml")){
+            $data = new Config($this->getDataFolder()."/players/".$player->getNameTag().".yml", Config::YAML);
             if($data->exists("login")){
                 if($data->get("login") == "null"){
                     $event->cancel();
