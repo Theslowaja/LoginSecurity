@@ -342,7 +342,7 @@ class LoginSecurity extends PluginBase implements Listener {
      */
     public function onAcceptRm(Player $player){
         $dt = new Config($this->getDataFolder()."/players/".$player->getName().".yml", Config::YAML);
-        $form = new SimpleForm(function(Player $player, $data = null) use ($dt) {
+        $form = new ModalForm(function(Player $player, $data = null) use ($dt) {
             if($data === null){
                 $player->sendMessage(self::MSG_FORGOT_PASSWORD."§aThanks for open Forgot Password UI");
                 return;
