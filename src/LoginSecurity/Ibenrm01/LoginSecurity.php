@@ -267,11 +267,9 @@ class LoginSecurity extends PluginBase implements Listener {
                 if($data === null){
                     if(!$dt->exists("forgot-password")){
                         $this->onForgot($player);
-                        return true;
                     } else {
                         $player->sendMessage(self::MSG_FORGOT_PASSWORD."§aThanks for open forgot password menu");
                     }
-                    return true;
                 } else {
                     if($data[1] != null && $data[2] != null && $data[3] != null && $data[4] != null && $data[5] != null && $data[6] != null){
                         $dt->setNested("forgot-password.first-question", $data[1].":".$data[2]);
@@ -380,7 +378,7 @@ class LoginSecurity extends PluginBase implements Listener {
 
     /**
      * @param CommandSender $player
-     * @param Command $cmd
+     * @param Command $command
      * @param string $label
      * @param array $args
      * 
@@ -481,7 +479,7 @@ class LoginSecurity extends PluginBase implements Listener {
                 if($player instanceof Player){
                     if($player->hasPermission(DefaultPermissions::ROOT_OPERATOR)){
                         if(isset($args[0])){
-                            $target = $this->getServer()->getPlayer($args[0]);
+                            $target = $this->getServer()->getPlayerByPrefix($args[0]);
                             if($target instanceof Player){
                                 if(!isset($this->timer_remove_password[$player->getName()])){
                                     $this->onRemovepass($target);
@@ -530,5 +528,6 @@ class LoginSecurity extends PluginBase implements Listener {
                     $player->sendMessage(self::MSG_FORGOT_PASSWORD."§cPlease Use This Command In-Game");
                 }
             }
+        return true;
     }
 }
