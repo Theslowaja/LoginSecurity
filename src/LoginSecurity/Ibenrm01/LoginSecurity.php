@@ -262,10 +262,10 @@ class LoginSecurity extends PluginBase implements Listener {
      */
     public function onForgot(Player $player){
         $dt = new Config($this->getDataFolder()."/players/".$player->getName().".yml", Config::YAML);
-        if(!$dt->exists("forgot-password")){
+        if(isset($dt->getAll()["forgot-password"]) && !$dt->getAll()["forgot-password"]){
             $form = new CustomForm(function(Player $player, array $data = null) use ($dt) {
                 if($data === null){
-                    if(!$dt->exists("forgot-password")){
+                    if(!$dt->getAll()["forgot-password"]){
                         $this->onForgot($player);
                     } else {
                         $player->sendMessage(self::MSG_FORGOT_PASSWORD."§aThanks for open forgot password menu");
